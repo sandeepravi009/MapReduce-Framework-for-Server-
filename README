@@ -1,0 +1,78 @@
+***************************
+
+Filename: README
+Date: 14 november 2016
+
+***************************
+
+Name: Sandeep Ravi
+Student ID: 4749906674
+
+***************************
+DESCRIPTION
+***************************
+This project implements a server client communication model involving some amount of data offloading from the AWS to the backend servers and later performs operations on the results it recieved form the backend servers and sends it to the client
+
+The client sends the sequence of numbers in a input file to AWS over TCP. AWS splits it into non overlapping sets, adds one element on top of the buffer to indicate the process that has to be done by the backend servers and sends it over UDP.
+
+The backend servers extract the first element and figures out the operation that has to done on the set of incoming data.
+After operating it sends the results baack to the server.
+
+The AWS waits till it has recieved the results from all the three servers, once done it will process those three results and output a the effective result to the client.
+
+client.cpp -> Reads the file and the operation to be performed and sends it to AWS.
+
+aws.cpp -> splits the data into three, adds a header(1st element in the buffer), sends to the backend servers over UDP, operates on the results from them and sends it back to client over TCP
+
+serverA.cpp/serverB.cpp/serverC.cpp -> extracts the header and perform the right operation on the data and send back over UDP
+
+Makefile -> commands to compile and build the executables for running the program.
+
+***************************
+EXECUTION
+***************************
+1.  Please make sure no executables are present in te directory
+2.	nums.csv file should be present in the directory. 
+	( file with one coloumn of integers,( no of integers should be multiple of 3 max of 999) each integer < 999.
+2.	make all
+3.	make serverA
+4.	make serverB
+5. 	make serverC
+6.	make aws
+7.	in the terminal $ ./client <function_name> (eg: ./client sum ./client max ./client min ./client sos)
+
+***************************
+CODE REUSE
+***************************
+There are no portions of code that were already developed. 
+Every bit of code was developed from scratch
+
+***************************
+REFERENCES 
+***************************
+
+BEEJ guide - To understand TCP and UDP communication and methods of implementaion.
+Videos on youtube:
+1.	https://www.youtube.com/watch?v=pFLQkmnmD0o
+2.	https://www.youtube.com/watch?v=eVYsIolL2gE
+3.	https://www.youtube.com/watch?v=eVYsIolL2gE&list=PL0JmC-T2nhdgJ2Lw5YdufR8MffaQdAvEf
+
+the above references were used to understand TCP/UDP program behaviour in run time.
+Stackoverflow: to get C++ errors fixed and few basic function for converting string to uppercase
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
